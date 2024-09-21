@@ -1,7 +1,7 @@
 from operator import index
 import streamlit as st
 import plotly.express as px
-from pycaret.regression import setup, compare_models, pull, save_model, load_model
+# from pycaret.regression import setup, compare_models, pull, save_model, load_model
 import pandas_profiling
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
@@ -9,6 +9,15 @@ import os
 
 if os.path.exists('./dataset.csv'): 
     df = pd.read_csv('dataset.csv', index_col=None)
+
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 with st.sidebar: 
     st.image("https://www.onepointltd.com/wp-content/uploads/2020/03/inno2.png")
@@ -31,14 +40,14 @@ if choice == "Profiling":
 
 if choice == "Modelling": 
     chosen_target = st.selectbox('Choose the Target Column', df.columns)
-    if st.button('Run Modelling'): 
-        setup(df, target=chosen_target, silent=True)
-        setup_df = pull()
-        st.dataframe(setup_df)
-        best_model = compare_models()
-        compare_df = pull()
-        st.dataframe(compare_df)
-        save_model(best_model, 'best_model')
+    # if st.button('Run Modelling'):
+    #     setup(df, target=chosen_target, silent=True)
+    #     setup_df = pull()
+    #     st.dataframe(setup_df)
+    #     best_model = compare_models()
+    #     compare_df = pull()
+    #     st.dataframe(compare_df)
+    #     save_model(best_model, 'best_model')
 
 if choice == "Download": 
     with open('best_model.pkl', 'rb') as f: 
